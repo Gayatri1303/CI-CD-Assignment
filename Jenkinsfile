@@ -56,16 +56,5 @@ pipeline {
 
 
 
-    post {
-        always {
-            script {
-                
-                emailext(
-                    subject: "Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    body: "The build has completed with status: ${currentBuild.currentResult}.",
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                )
-            }
-        }
-    }
+    
 }
