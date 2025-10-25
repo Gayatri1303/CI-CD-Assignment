@@ -1,9 +1,7 @@
 pipeline {
     agent {label 'agent-jenkins'}
 
-    environment {
-        AWS_ACCESS_KEY_ID = credentials('my-aws-creds_USR') 
-        AWS_SECRET_ACCESS_KEY = credentials('my-aws-creds_PSW') 
+    environment { 
         AWS_DEFAULT_REGION    = 'ap-south-1'
         
     }
@@ -12,12 +10,20 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id'
+                ]]) 
                 sh 'terraform init -input=false'
             }
         }
 
         stage('Terraform Plan') {
             steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id'
+                ]]) 
                 sh 'terraform plan -out=tfplan -input=false'
                 sh 'terraform show -no-color tfplan > plan.txt'
             }
@@ -32,6 +38,10 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id'
+                ]]) 
                 sh 'terraform apply -input=false tfplan'
             }
         }
