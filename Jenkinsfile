@@ -12,7 +12,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds-id'
+                    credentialsId: 'aws-creds'
                 ]]) {
                 sh 'terraform init -input=false'
                 }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds-id'
+                    credentialsId: 'aws-creds'
                 ]]) {
                 sh 'terraform plan -out=tfplan -input=false'
                 sh 'terraform show -no-color tfplan > plan.txt'}
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds-id'
+                    credentialsId: 'aws-creds'
                 ]]) {
                 sh 'terraform apply -input=false tfplan'
             }
