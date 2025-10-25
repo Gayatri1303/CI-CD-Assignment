@@ -2,8 +2,9 @@ pipeline {
     agent {label 'agent-jenkins'}
 
     environment {
-        AWS_CREDENTIANLS    = credentials('aws-creds-id')
+        AWS_CREDENTIALS   = credentials('aws-creds-id')
         AWS_DEFAULT_REGION    = 'ap-south-1'
+        
     }
     stages {
 
