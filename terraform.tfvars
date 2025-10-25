@@ -1,2 +1,2 @@
 region = "ap-south-1"
-bucket = "CICDbuck"
+bucket = "cicdbuck1303"
