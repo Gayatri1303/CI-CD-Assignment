@@ -1,4 +1,4 @@
-module "s3_bucket" {
+module "s3_buck" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
   bucket = var.bucket
