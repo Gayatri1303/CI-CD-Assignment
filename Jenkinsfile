@@ -49,17 +49,33 @@ pipeline {
     }
     }
 
-    post {
-        success {
-            echo 'Terraform apply succeeded!'
+    // post {
+    //     success {
+    //         echo 'Terraform apply succeeded!'
            
-        }
-        failure {
-            echo 'Terraform failed!'
+    //     }
+    //     failure {
+    //         echo 'Terraform failed!'
             
-        }
-    }
+    //     }
+    // }
 
+    post {
+    success {
+        emailext(
+            subject: '$DEFAULT_SUBJECT',
+            body: '$DEFAULT_CONTENT',
+            to: '$DEFAULT_RECEPIENTS'
+        )
+    }
+    failure {
+        emailext(
+            subject: '$DEFAULT_SUBJECT',
+            body: '$DEFAULT_CONTENT',
+            to: '$DEFAULT_RECEPIENTS'
+        )
+    }
+}
 
 
     
