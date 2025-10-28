@@ -3,17 +3,17 @@ pipeline {
 
     environment { 
         AWS_DEFAULT_REGION    = 'ap-south-1'
+        FILE= credentials('credsaws')
         
     }
     stages {
 
         stage('AWS Login') {
             steps {
-                withCredentials([file(credentialsId: 'credsaws', variable: 'credsaws')]) {
-                       
-                sh 'aws configure import --csv file://${credsaws}'
+                
+                sh 'aws configure import --csv file://${FILE}'
                 sh 'aws configure list'
-            }
+            
         }
         }
 
