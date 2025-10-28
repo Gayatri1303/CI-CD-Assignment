@@ -15,10 +15,10 @@ pipeline {
                 sh '''
                 
                 echo "DEBUG: Access Key is: $AWS_ACCESS_KEY__ID"
-                echo "DEBUG: Secret Key is: $AWS_SECRET_KEY"
+                echo "DEBUG: Secret Key is: $AWS_SECRET_ACCESS_KEY"
 
                 aws configure set aws_access_key_id  $AWS_ACCESSKEY__ID
-                aws configure set aws_secret_access_key $AWS_SECRET_KEY
+                aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
                 aws configure set region $AWS_DEFAULT_REGION
                 aws sts get-caller-identity
 
