@@ -19,14 +19,14 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh 'terraform init -input=false'
-                echo 'aws configure list'
+                sh 'aws configure list'
                 }
             }
         
 
         stage('Terraform Plan') {
             steps {
-                echo 'aws configure list'
+                sh 'aws configure list'
                 sh 'terraform plan -out=tfplan -input=false'
                 sh 'terraform show -no-color tfplan > plan.txt'
             }
