@@ -17,7 +17,8 @@ pipeline {
                 cat $FILE
                 aws configure set aws_access_key_id  $AWS_ACCESS_KEY 
                 aws configure set aws_secret_access_key $AWS_SECRET_KEY
-                aws configure list
+                aws configure set region $AWS_DEFAULT_REGION
+                aws sts get-caller-identity
 
                 '''
             
@@ -27,14 +28,14 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh 'terraform init -input=false'
-                sh 'aws configure list'
+                sh 'aws sts get-caller-identity'
                 }
             }
         
 
         stage('Terraform Plan') {
             steps {
-                sh 'aws configure list'
+                sh 'aws sts get-caller-identity'
                 sh 'terraform plan -out=tfplan -input=false'
                 sh 'terraform show -no-color tfplan > plan.txt'
             }
