@@ -7,26 +7,27 @@ pipeline {
     }
     stages {
 
+        stage('AWS Login') {
+            steps {
+                withCredentials([file(credentialsId: 'credsaws', variable: 'credsaws')]) {
+                       
+                sh 'aws configure import --csv file://${credsaws}'
+            }
+        }
+        }
 
         stage('Terraform Init') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
                 sh 'terraform init -input=false'
                 }
             }
-        }
+        
 
         stage('Terraform Plan') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
+                
                 sh 'terraform plan -out=tfplan -input=false'
-                sh 'terraform show -no-color tfplan > plan.txt'}
+                sh 'terraform show -no-color tfplan > plan.txt'
             }
             
         }
@@ -39,12 +40,9 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
+               
                 sh 'terraform apply -input=false tfplan'
-            }
+            
         }
     }
     }
