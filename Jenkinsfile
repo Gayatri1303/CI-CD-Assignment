@@ -12,6 +12,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'credsaws', variable: 'credsaws')]) {
                        
                 sh 'aws configure import --csv file://${credsaws}'
+                sh 'aws configure list'
             }
         }
         }
