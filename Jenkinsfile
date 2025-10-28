@@ -4,15 +4,22 @@ pipeline {
     environment { 
         AWS_DEFAULT_REGION    = 'ap-south-1'
         FILE= credentials('credsaws')
-        
+        AWS_ACCESS_KEY= credentials('AWS_ACCESS_KEY')
+        AWS_SECRET_KEY= credentials('AWS_SECRET_KEY')
     }
     stages {
 
         stage('AWS Login') {
             steps {
                 
-                sh 'aws configure import --csv file://${FILE}'
-                sh 'aws configure list'
+                // sh 'aws configure import --csv file://${FILE}'
+                sh '''
+                cat $FILE
+                aws configure set aws_access_key_id  $AWS_ACCESS_KEY 
+                aws configure set aws_secret_access_key $AWS_SECRET_KEY
+                aws configure list
+
+                '''
             
         }
         }
