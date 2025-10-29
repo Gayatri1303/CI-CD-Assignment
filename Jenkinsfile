@@ -75,12 +75,14 @@ pipeline {
         emailext(
             subject: '$DEFAULT_SUBJECT',
             body: '$DEFAULT_CONTENT',
+            from: 'gayauk1303@gmail.com'
             to: '$DEFAULT_RECIPIENTS'
         )
     }
     failure {
         emailext(
             subject: '$DEFAULT_SUBJECT',
+            from: 'gayauk1303@gmail.com',
             body: '$DEFAULT_CONTENT',
             to: '$DEFAULT_RECIPIENTS'
         )
